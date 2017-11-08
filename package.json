@@ -1,0 +1,28 @@
+{
+  "name": "retro_pinball",
+  "version": "1.0.0",
+  "description": "retro 2D pinball game for Game Off jam",
+  "main": "index.html",
+  "scripts": {
+    "start" : "http-server -c-1 ./",
+    "test": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Julien-laville/retro_pinball.git"
+  },
+  "keywords": [
+    "Pinball",
+    "retro",
+    "game",
+    "jam",
+    "game",
+    "off"
+  ],
+  "author": "Julien",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Julien-laville/retro_pinball/issues"
+  },
+  "homepage": "https://github.com/Julien-laville/retro_pinball#readme"
+}
