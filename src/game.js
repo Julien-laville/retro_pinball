@@ -3,6 +3,7 @@ FRAME_STEP = 1000/60.0// we will speed up dat shit
 PLAYFIELD_ANGLE = 6.5 //degree
 SCREEN_SCALE = 20
 
+score = 0
 
 
 window.onload = init
@@ -14,6 +15,7 @@ function init() {
     rightFlipper = new Flipper(new v2d(11,4), {baseAngle : Math.PI, isClockWise:false})
     leftFlipper = new Flipper(new v2d(4,4), {baseAngle : 0, isClockWise:true})
     plunger = new Plunger(new v2d(15,9))
+    mushrooms = [new Mushroom(new v2d(4,11),0.7, 100),new Mushroom(new v2d(8,11),0.7, 100),new Mushroom(new v2d(12,11),0.7, 100)]
 
     slingShots = [new Slingshots(new v2d(3,7), new v2d(5,5), new v2d(100,100)), new Slingshots(new v2d(9,5), new v2d(11,7), new v2d(-100,100))]
 

@@ -160,7 +160,7 @@ function Slingshots(a,b, pulse) {
                 ctx.fill()
             },
             touch : function (contact, ball) {
-                ball.applyLinearImpulse(pulse, ball.getWorldCenter(),pulse)
+                ball.applyLinearImpulse(pulse, ball.getWorldCenter())
             }
         }
     }
@@ -172,8 +172,6 @@ function Slingshots(a,b, pulse) {
 }
 
 function Target() {
-
-
     return {
 
     }
@@ -188,7 +186,8 @@ function Switch() {
 
 }
 
-function Mushroom(pos, size) {
+function Mushroom(pos, size, force) {
+    let normale = new v2d()
     const mushroomDef = {
         userData : {
             draw : function () {
@@ -197,8 +196,12 @@ function Mushroom(pos, size) {
                 ctx.fillStyle = 'white'
                 ctx.fill()
             },
-            touch : {
-                // ding
+            touch : function (contact, ball) {
+                normale.set(ball.getPosition())
+                normale.sub(pos)
+                normale.clamp()
+                normale.mul(force)
+                ball.applyLinearImpulse(normale, ball.getWorldCenter(),)
             }
         }
     }
