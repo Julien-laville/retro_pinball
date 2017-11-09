@@ -11,8 +11,8 @@ function Playground() {
                 ctx.beginPath()
                 let vertices = chain.m_vertices
                 ctx.moveTo(vertices[0].x*SCREEN_SCALE, vertices[0].y*SCREEN_SCALE)
-                for(let i = 0; i < vertices.length-1;i ++) {
-                    ctx.lineTo(vertices[i+1].x*SCREEN_SCALE, vertices[i+1].y*SCREEN_SCALE)
+                for(let i = 1; i < vertices.length;i ++) {
+                    ctx.lineTo(vertices[i].x*SCREEN_SCALE, vertices[i].y*SCREEN_SCALE)
                 }
                 ctx.fill()
             }
@@ -22,7 +22,8 @@ function Playground() {
     wall.createFixture(planck.Chain([
         new v2d(8, 0),
         new v2d(16.0, 8.0),
-        new v2d(16.0, 22.0),
+        new v2d(16.0, 20.0),
+        new v2d(14.0, 22.0),
         new v2d(0, 22.0),
         new v2d(0, 8.0)
     ], true), wallDef);
