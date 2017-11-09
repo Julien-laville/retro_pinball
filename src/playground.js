@@ -1,7 +1,7 @@
 function Playground() {
     const wallDef = {
         friction: 0.05,
-        restitution: 0.98,
+        restitution: 0.5,
         userData : {
             draw : function () {
                 ctx.fillStyle = "#345"
@@ -22,9 +22,9 @@ function Playground() {
     wall.createFixture(planck.Chain([
         new v2d(8, 0),
         new v2d(16.0, 8.0),
-        new v2d(16.0, 20.0),
-        new v2d(14.0, 22.0),
-        new v2d(0, 22.0),
+        new v2d(16.0, 30.0),
+        new v2d(14.0, 32.0),
+        new v2d(0, 32.0),
         new v2d(0, 8.0)
     ], true), wallDef);
 

@@ -1,12 +1,18 @@
 const FLIPPER_SPEED = 1000
 const BALL_SIZE = 0.4
+const BALL_TYPE = Symbol()
+
 
 function Ball(pos) {
     ballDef = {
         friction: 0.2,
-        restitution: 0.6,
-        density: 1,
+        restitution: 0.3,
+        density:6,
         userData : {
+            type : BALL_TYPE,
+            getBall : function () {
+                return ball
+            },
             draw: function () {
                 ctx.beginPath()
                 ctx.arc(ball.getPosition().x*SCREEN_SCALE, ball.getPosition().y*SCREEN_SCALE,BALL_SIZE*SCREEN_SCALE, 0, Math.PI*2)
@@ -131,13 +137,38 @@ function Plunger(pos) {
 }
 
 
-function Slingshots() {
+function Slingshots(a,b, pulse) {
+    const edgeFixture = {
+        userData : {
+            draw : function () {
+                ctx.fillStyle = 'orange'
+
+                ctx.beginPath()
+                ctx.moveTo(a.x*SCREEN_SCALE,a.y*SCREEN_SCALE)
+                ctx.lineTo(b.x*SCREEN_SCALE,b.y*SCREEN_SCALE)
+
+                ctx.lineWidth = 4
+                ctx.stroke()
+                ctx.strokeStyle = "green"
 
 
-
-    return {
-
+                ctx.beginPath()
+                ctx.arc(a.x*SCREEN_SCALE,a.y*SCREEN_SCALE,3,0,2*Math.PI)
+                ctx.fill()
+                ctx.beginPath()
+                ctx.arc(b.x*SCREEN_SCALE,b.y*SCREEN_SCALE,3,0,2*Math.PI)
+                ctx.fill()
+            },
+            touch : function (contact, ball) {
+                ball.applyLinearImpulse(pulse, ball.getWorldCenter(),pulse)
+            }
+        }
     }
+
+    
+
+    const edge = world.createBody()
+    edge.createFixture(planck.Edge(a,b),edgeFixture)
 }
 
 function Target() {
@@ -154,5 +185,24 @@ function Trap() {
 }
 
 function Switch() {
+
+}
+
+function Mushroom(pos, size) {
+    const mushroomDef = {
+        userData : {
+            draw : function () {
+                ctx.beginPath()
+                ctx.arc(pos.x*SCREEN_SCALE,pos.y*SCREEN_SCALE,size*SCREEN_SCALE,0,2*Math.PI)
+                ctx.fillStyle = 'white'
+                ctx.fill()
+            },
+            touch : {
+                // ding
+            }
+        }
+    }
+    const mushroom = world.createBody(pos)
+    mushroom.createFixture(planck.Circle(size), mushroomDef)
 
 }
