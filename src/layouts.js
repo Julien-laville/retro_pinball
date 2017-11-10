@@ -3,8 +3,8 @@ const BALL_SIZE = 0.4
 const BALL_TYPE = Symbol()
 
 
-function Ball(pos) {
-    ballDef = {
+function Ball(pos, active) {
+    const ballDef = {
         friction: 0.2,
         restitution: 0.3,
         density:6,
@@ -22,11 +22,35 @@ function Ball(pos) {
         }
     }
 
-    const ball = world.createDynamicBody();
-    ball.setBullet(true);
-    ball.setPosition(pos);
-    ball.createFixture(planck.Circle(BALL_SIZE), ballDef);
+    const ball = world.createDynamicBody()
+    ball.setBullet(true)
+    ball.setPosition(pos)
+    ball.setActive(active)
+    ball.createFixture(planck.Circle(BALL_SIZE), ballDef)
+
+    return {
+        getBall : function() {
+            return ball
+        },
+        isActive : function () {
+            return ball.isActive()
+        },
+        setActive : function (active) {
+            ball.setActive(active)
+        },
+        launch : function (pos, imoulse) {
+            ball.setActive(true)
+            ball.setPosition(pos)
+            ball.setLinearVelocity(impulse)
+        }
+    }
 }
+
+Ball.get = function () {
+    return balls[Ball.position++]
+}
+
+Ball.position = 1
 
 function Flipper(pos, options) {
 
@@ -171,19 +195,68 @@ function Slingshots(a,b, pulse) {
     edge.createFixture(planck.Edge(a,b),edgeFixture)
 }
 
-function Target() {
-    return {
 
+
+function Trap(pos, size, time) {
+    const trapBody = world.createBody(pos)
+
+    const trapDef = {
+        isSensor : true,
+        shape : planck.Circle(size),
+        userData : {
+            draw : function () {
+                ctx.strokeStyle = "#fff"
+                ctx.beginPath()
+                ctx.arc(pos.x*SCREEN_SCALE,pos.y*SCREEN_SCALE,size*SCREEN_SCALE,0,2*Math.PI)
+                ctx.stroke()
+            },
+            touch : function (contact, ball) {
+                ball.setActive(false)
+            }
+        }
+    }
+    trapBody.createFixture(trapDef)
+}
+
+function Switch(pos) {
+    let client = null
+
+
+    const switchBody = world.createBody(pos)
+
+    const switchDef = {
+        isSensor : true,
+        shape : planck.Circle(5),
+        userData : {
+            draw : function () {
+                ctx.strokeStyle = "blue"
+                ctx.beginPath()
+                ctx.arc(pos.x*SCREEN_SCALE,pos.y*SCREEN_SCALE,size*SCREEN_SCALE,0,2*Math.PI)
+                ctx.stroke()
+            },
+            touch : function (contact, ball) {
+                client.trigger()
+            }
+        }
+    }
+    switchBody.createFixture(switchDef)
+
+    return {
+        register : function (c) {
+            client = c
+        }
     }
 }
 
+function Cannon(pos, impulse) {
 
-function Trap() {
-
-}
-
-function Switch() {
-
+    let ball = null
+    return {
+        fire : function () {
+            ball = Ball.get()
+            ball.launch(pos, impulse)
+        }
+    }
 }
 
 function Mushroom(pos, size, force) {
@@ -201,7 +274,7 @@ function Mushroom(pos, size, force) {
                 normale.sub(pos)
                 normale.clamp()
                 normale.mul(force)
-                ball.applyLinearImpulse(normale, ball.getWorldCenter(),)
+                ball.applyLinearImpulse(normale, ball.getWorldCenter())
             }
         }
     }

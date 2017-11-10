@@ -14,3 +14,15 @@ function trigger(contact) {
             fixtureB.getUserData().touch(contact, fixtureA.getUserData().getBall())
     }
 }
+
+
+function Mode() {
+    return {
+        multiBall : function () {
+            cannon.fire()
+            cannon.fire()
+            cannon.fire()
+        }
+    }
+}
+
