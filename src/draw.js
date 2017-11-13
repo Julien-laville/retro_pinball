@@ -13,6 +13,9 @@ function draw() {
             fixture.getUserData().draw()
         }
     }
+    if(MODE === EDITOR_MODE) {
+        editor.draw()
+    }
 }
 
 
