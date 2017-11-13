@@ -282,3 +282,21 @@ function Mushroom(pos, size, force) {
     mushroom.createFixture(planck.Circle(size), mushroomDef)
 
 }
+
+function BallDispenser(pos, count) {
+    let ball = null
+    return {
+        addBall : function() {
+            count++
+        },
+        dispense : function () {
+            count--
+            ball = Ball.get()
+            ball.launch(pos, new v2d(0,0))
+        }
+    }
+}
+
+function ballSupressor(pos) {
+    ballDispensor.dispense()
+}

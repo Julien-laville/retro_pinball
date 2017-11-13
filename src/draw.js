@@ -14,3 +14,37 @@ function draw() {
         }
     }
 }
+
+
+HOME_PAGE = Symbol()
+MENU_PAGE = HOME_PAGE
+
+current = 0
+keyAvailable = true
+function drawMenu() {
+    base.width += 0
+    ctx.fillStyle="#07090c"
+    ctx.fillRect(0,0, base.width, base.height)
+
+    ctx.fillStyle="#fff"
+    ctx.font = '30px serif'
+    ctx.fillText('Editor', 300,300)
+    ctx.fillText('Play', 300,350)
+
+    ctx.fillRect(270, current*50+300-20, 20,20)
+    if((up || down) && keyAvailable) {
+        keyAvailable = false
+        setTimeout(function () {
+            keyAvailable = true
+        },300)
+        current++
+        current = current%2
+    }
+    if(plungerActive) {
+        if(current%2 === 1) {
+            MODE = GAME_MODE
+        } else if(current%2 === 0) {
+            MODE = EDITOR_MODE
+        }
+    }
+}

@@ -2,6 +2,10 @@ leftFlipperActive = false
 rightFlipperActive = false
 plungerActive = false
 
+
+down = false
+up = false
+
 window.onkeydown = function (e) {
     if(e.keyCode === 81) {
         leftFlipperActive = true
@@ -12,6 +16,13 @@ window.onkeydown = function (e) {
     if(e.keyCode === 32) {
         plungerActive = true
     }
+    if(e.keyCode === 40 || e.keyCode === 83) {
+        down = true
+    }
+    if(e.keyCode === 38 || e.keyCode === 90) {
+        up = true
+    }
+
 }
 
 
@@ -24,6 +35,12 @@ window.onkeyup = function (e) {
     }
     if(e.keyCode === 32) {
         plungerActive = false
+    }
+    if(e.keyCode === 40 || e.keyCode === 83) {
+        down = false
+    }
+    if(e.keyCode === 38 || e.keyCode === 90) {
+        up = false
     }
 }
 
